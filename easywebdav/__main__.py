@@ -38,7 +38,7 @@ def do_upload(local, remote):
             raise
     else:
         # Uploading a directory
-        os.path.walk(local, _do_upload_dir, (client, local))
+        os.path.walk(local, _do_upload_dir, (con, local))
 
 def _do_upload_dir(args, dirname, files):
     """Callback for walking the directory tree and uploading files and folders.

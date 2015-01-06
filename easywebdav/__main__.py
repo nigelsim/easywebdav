@@ -57,13 +57,9 @@ def _do_upload_dir(args, dirname, files):
             print "Upload failed: " + (relpath + f_name)
             raise
 
-if __name__ == '__main__':
-    opts, args = getopt.getopt(sys.argv[1:], 'r')
-    recursive = False
 
-    for k, v in opts:
-        if k == '-r':
-            recursive = bool(v)
+def main():
+    opts, args = getopt.getopt(sys.argv[1:], '')
 
     if len(args) == 0:
         print_help()
@@ -79,3 +75,6 @@ if __name__ == '__main__':
         print "Unknown command: %s"%(cmd,)
         print_help()
         sys.exit(1)
+
+if __name__ == '__main__':
+    main()

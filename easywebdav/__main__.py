@@ -8,27 +8,32 @@ def print_help():
     print """
     %(cmd)s <ops> <command> [args]
 
+    ops:
+        -i                          disable verifing SSL (insecure)
+
     commands:
         upload <local> <remote>     uploads the file or folder
         list <remote>               list the remote folder
         ls <remote>                 list the remote folder
         """%{'cmd':sys.argv[0]}
 
-def connect(url):
+def connect(url, verify_ssl=True):
     """Connect to the remote server and return the Client object"""
     parts = urlparse.urlparse(url)
 
-    return easywebdav.connect(parts.hostname, username=parts.username, password=parts.password, protocol=parts.scheme, path=parts.path)
+    return easywebdav.connect(parts.hostname, username=parts.username, \
+                        password=parts.password, protocol=parts.scheme, \
+                        path=parts.path, verify_ssl=verify_ssl)
 
-def do_list(remote):
+def do_list(remote, verify_ssl):
     """Perform a listing of a folder"""
-    con = connect(remote)
+    con = connect(remote, verify_ssl)
     for item in con.ls():
         print item
 
-def do_upload(local, remote):
+def do_upload(local, remote, verify_ssl):
     """Upload a file or directory to a remote location"""
-    con = connect(remote)
+    con = connect(remote, verify_ssl)
     if os.path.isfile(local):
         try:
             client.upload(local, os.path.basename(local))
@@ -59,7 +64,12 @@ def _do_upload_dir(args, dirname, files):
 
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:], '')
+    opts, args = getopt.getopt(sys.argv[1:], 'i')
+
+    verify_ssl = True
+    for k,v in opts:
+        if k == '-s':
+            verify_ssl = False
 
     if len(args) == 0:
         print_help()
@@ -68,9 +78,9 @@ def main():
     cmd = args.pop(0)
 
     if cmd in ('ls', 'list'):
-        do_list(*args)
+        do_list(*args, verify_ssl=verify_ssl)
     elif cmd in ('upload'):
-        do_upload(*args)
+        do_upload(*args, verify_ssl=verify_ssl)
     else:
         print "Unknown command: %s"%(cmd,)
         print_help()

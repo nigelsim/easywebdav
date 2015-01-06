@@ -6,15 +6,18 @@ import easywebdav
 
 def print_help():
     print """
-    %(cmd)s <ops> <command> [args]
+    %(cmd)s [opts] <command> [args]
 
-    ops:
+    opts:
         -i                          disable verifing SSL (insecure)
 
     commands:
         upload <local> <remote>     uploads the file or folder
         list <remote>               list the remote folder
         ls <remote>                 list the remote folder
+
+    Examples:
+        %(cmd)s -i list https://username:password@myserver.com/path
         """%{'cmd':sys.argv[0]}
 
 def connect(url, verify_ssl=True):

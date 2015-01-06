@@ -80,3 +80,29 @@ Running the tests:
 Running the tests with WebDAV server logs:
 
     WEBDAV_LOGS=1 nosetests --with-yanc --nologcapture --nocapture -v tests
+
+Command Line Usage
+------------------
+
+You can invoke the command line client either by calling teh easywebdav module:
+
+    python -m easywebdav [opts] <command> [args]
+
+or by using the entry point script that will be created when you install the library:
+
+    easywebdav [opts] <command> [args]
+
+CLI usage is as follows:
+
+    easywebdav [opts] <command> [args]
+
+    ops:
+        -i                          disable verifing SSL (insecure)
+
+    commands:
+        upload <local> <remote>     uploads the file or folder
+        list <remote>               list the remote folder
+        ls <remote>                 list the remote folder
+
+    Examples:
+        easywebdav -i list https://username:password@myserver.com/path

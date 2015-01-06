@@ -55,8 +55,11 @@ def _do_upload_dir(args, dirname, files):
     if not con.exists(relpath):
         con.mkdirs(relpath)
     for f_name in files:
+        f_path = os.path.join(basepath, relpath, f_name)
+        if not os.path.isfile(f_path):
+            continue
         try:
-            con.upload(os.path.join(basepath, relpath, f_name), relpath + f_name)
+            con.upload(f_path, relpath + f_name)
             print "Uploaded OK: " + (relpath + f_name)
         except:
             print "Upload failed: " + (relpath + f_name)

@@ -36,7 +36,7 @@ def do_upload(local, remote, verify_ssl):
     con = connect(remote, verify_ssl)
     if os.path.isfile(local):
         try:
-            client.upload(local, os.path.basename(local))
+            con.upload(local, os.path.basename(local))
             print "Uploaded OK: " + local
         except:
             print "Upload failed: " + local
@@ -68,7 +68,7 @@ def main():
 
     verify_ssl = True
     for k,v in opts:
-        if k == '-s':
+        if k == '-i':
             verify_ssl = False
 
     if len(args) == 0:

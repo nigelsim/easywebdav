@@ -26,7 +26,7 @@ properties = dict(
         "requests",
         ],
     entry_points=dict(
-        console_scripts=['easywebdav = easywebdav.__main__:main'],
+        console_scripts=['easywebdav = easywebdav:main'],
         ),
     )
 
